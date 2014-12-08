@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Cust_ID: 1
+  Tran_ID: 1
+  Tran_Amt: 1
+  Source: MyString
+  Destination: MyString
+
+two:
+  Cust_ID: 1
+  Tran_ID: 1
+  Tran_Amt: 1
+  Source: MyString
+  Destination: MyString

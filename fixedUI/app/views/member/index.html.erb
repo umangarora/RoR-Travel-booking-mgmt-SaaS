@@ -1,0 +1,21 @@
+<div align="center">
+<h1>Travel Desk</h1><br><br>
+
+
+<%= form_for :member, url: member_authenticate_path do |f| %>
+
+    <p>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </p>
+    <p>
+      <%= f.label :Password %>
+      <%= f.password_field :password %>
+    </p>
+    <p>
+      <%= f.submit "Login" %><br><br>
+      <%= link_to '<button type="button">Signup</button>'.html_safe, new_member_path %>
+    </p>
+
+<% end %>
+</div>

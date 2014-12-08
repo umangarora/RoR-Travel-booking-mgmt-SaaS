@@ -1,0 +1,182 @@
+<% if is_logged_in? %>
+    Logged in as: <%= logged_in_user.agentName %>
+      <%= link_to '<button type="button">Logout</button>'.html_safe, {:controller => 'member', :action => 'logout'}, :method => :post %>
+    <br><br><%= link_to "Home", welcome_index_path %>
+    <br><br>
+
+    <div align="center"><h1>Airline Booking</h1></div>
+    <%= form_for :airlineObj do |f| %>
+        <% if !@airlineObj.hash_errors.empty? %>
+            <div id="error_explanation" >
+              <h2><%= pluralize(@airlineObj.hash_errors.size, "error") %>
+                prohibited this entry from being saved:</h2>
+              <ul>
+                <% @airlineObj.hash_errors.each do |key, value| %>
+                    <li><%= key %> : <%= value %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+      <p>
+        Customer Name:
+        <%= f.text_field :custName %>
+      </p>
+
+      <p>
+        Customer id
+        <%= f.text_field :custId %>
+      </p>
+
+        <p><%= button_tag "Create Customer", id: "create", :onclick=>"createCust()" %>
+          <%= button_tag "Delete Customer", {id: 'create', type: 'button', onclick: "delCust()", data: { confirm: 'Are you sure?' }} %><br><br><br></p>
+
+      <p>
+        Booking ID:
+        <%= f.text_field :bookingId %>
+      </p>
+
+      <p>
+        Source:
+        <%= f.text_field :source %>
+      </p>
+
+      <p>
+        Destination:
+        <%= f.text_field :destination %>
+      </p>
+
+      <p>
+        Date:
+        <%= f.text_field :pickup %>
+      </p>
+
+      <p>
+        <%= button_tag "Find Customer", {id: 'findBillButton', type: 'button', onclick: "findCust()"}  %>
+          <%= button_tag "Find Booking", :onclick=>"findBook()" %><br><br>
+          <%= button_tag "Book", :onclick=>"book()" %>
+          <%= button_tag "Update Booking", :onclick=>"updateBook()" %><br>
+
+      </p>
+
+    <% end %>
+
+
+<% else %>
+    <p>User not signed in.</p>
+    <%= link_to 'Login', :controller => 'member', :action => 'login' %>
+
+<% end %>
+
+<H1>Select the payment options you want to include</H1>
+<br>
+<H2>Account Transfer</H2>
+<br>
+<%= form_for :airpayment, url:airline_addpaydetails_path do |f| %>
+<%= f.label :payment %> <br/>
+
+<%= f.check_box :paymentOptionCheckbox  %> Select if you want this payment option <br/>
+<H2>Account Transfer!</H2>
+  <p>
+    <%= f.label :accountID %><br>
+    <%= f.text_field :accountID %>
+  </p>
+ 
+  <p>
+    <%= f.label :custBankID %><br>
+    <%= f.text_field :custBankID %>
+  </p>
+<p>
+  <%= f.submit "Submit" %><br><br>
+</p>
+
+  <% end %>
+
+<script>
+
+    function createCust()
+    {
+
+        document.forms[0].action = "/airlinebooking/createCust";
+        document.forms[0].submit();
+    }
+
+    function findCust()
+    {
+        data = {};
+        data[$('#airlineObj_custId')[0].name] = $('#airlineObj_custId')[0].value;
+        $.post("/airlinebooking/findCust", data, findCustomerCallBack, 'json');
+
+        //document.forms[0].action = "/airlinebooking/findCust";
+        //document.forms[0].submit();
+    }
+
+    function findCustomerCallBack(data, status)
+    {
+        $('#airlineObj_custName')[0].value = data.custName
+        $('#airlineObj_custId')[0].value = data.custId
+
+        g_customer_id = data.id;
+
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+    function bookingFormDisplayToggle(){
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#bookingFormDiv')[0].style.display = 'block';
+        }
+
+    }
+
+    function lastBookingFormDisplayToggle()
+    {
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#lastBookingFormDiv')[0].style.display = 'block';
+        }
+    }
+
+
+
+    function delCust()
+    {
+        data = {};
+
+        data[$('#airlineObj_custId')[0].name] = $('#airlineObj_custId')[0].value;
+        //alert(data)
+        $.post("/airlinebooking/delCust", data, findCustomerCallBack, 'json');
+
+        //document.forms[0].action = "/airlinebooking/delCust";
+        //document.forms[0].submit();
+    }
+
+    function deleteCustomerCallBack(data, status)
+    {
+        $('#airlineObj_custName')[0].value = 'nil'
+        $('#airlineObj_custId')[0].value = 'nil'
+
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+    function findBook()
+    {
+
+        document.forms[0].action = "/airlinebooking/findBook";
+        document.forms[0].submit();
+    }
+
+    function book()
+    {
+
+        document.forms[0].action = "/airlinebooking/book";
+        document.forms[0].submit();
+    }
+
+    function updateBook()
+    {
+
+        document.forms[0].action = "/airlinebooking/updateBook";
+        document.forms[0].submit();
+    }
+
+</script>

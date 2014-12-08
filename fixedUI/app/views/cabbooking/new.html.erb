@@ -1,0 +1,242 @@
+<% if is_logged_in? %>
+    Logged in as: <%= logged_in_user.agentName %>
+    <%= link_to '<button type="button">Logout</button>'.html_safe, {:controller => 'member', :action => 'logout'}, :method => :post %>
+    <br><br><%= link_to "Home", welcome_index_path %>
+    <br><br>
+    <div align="center"><h1>Cab Booking</h1></div>
+    <%= form_for :cabObj do |f| %>
+        <% if !@cabObj.hash_errors.empty? %>
+            <div id="error_explanation" >
+              <h2><%= pluralize(@cabObj.hash_errors.size, "error") %>
+                prohibited this entry from being saved:</h2>
+              <ul>
+                <% @cabObj.hash_errors.each do |key, value| %>
+                    <li><%= key %> : <%= value %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <p>
+          Customer Name:
+          <%= f.text_field :custName %>
+        </p>
+
+        <p>
+          Customer id
+          <%= f.text_field :custId %>
+        </p>
+
+        <p><%= button_tag "Create Customer", id: "create",type: 'button', :onclick=>"createCust()" %>
+
+          <%= button_tag "Delete Customer", {id: 'create', type: 'button', onclick: "delCust()", data: { confirm: 'Are you sure?' }} %> </p>
+
+        <p>
+          Booking ID:
+          <%= f.text_field :bookingId %>
+        </p>
+
+        <p>
+          Source:
+          <%= f.text_field :source %>
+        </p>
+
+        <p>
+          Destination:
+          <%= f.text_field :destination %>
+        </p>
+
+        <p>
+          Pick up Time:
+          <%= f.text_field :pickup %>
+        </p>
+
+        <p>
+
+          <%= button_tag "Find Customer", {id: 'findBillButton', type: 'button', onclick: "findCust()"}  %>
+          <%= button_tag "Book", {id: 'bookButton', type: 'button', onclick: "book()"}  %><br><br>
+          <%= button_tag "Find Booking", {id: 'findBookingButton', type: 'button', onclick: "findBook()"}  %>
+          <%= button_tag "Update Booking", {id: 'updateButton', type: 'button', onclick: "updateBook()"}  %> <br>
+
+        </p>
+
+    <% end %>
+
+
+<% else %>
+    <p>User not signed in.</p>
+    <%= link_to 'Login', :controller => 'member', :action => 'login' %>
+
+<% end %>
+
+<script>
+
+    function createCust()
+    {
+        /* data = {};
+
+         data[$('#cabObj_custName')[0].name] = $('#cabObj_custName')[0].value;
+         //alert(data)
+         <<<<<<< 605378ea56095926f170ef4175c239c091035ee6
+         $.post("/cabbooking/createCust", data, createCustomerCallBack, 'json');
+         =======
+         $.post("/cabbooking/createCust", data, createCustomerCallBack, 'json'); */
+
+
+        document.forms[0].action = "/cabbooking/createCust";
+        document.forms[0].submit();
+    }
+
+    /*function createCustomerCallBack(data, status)
+     {
+     //$('#cabObj_custName')[0].value = data.custName
+     $('#CabObj_custId')[0].value = data.custId
+
+     g_customer_id = data.id;
+
+     bookingFormDisplayToggle();
+     lastBookingFormDisplayToggle();
+     }      */
+
+    function findCust()
+    {
+        data = {};
+
+        data[$('#cabObj_custId')[0].name] = $('#cabObj_custId')[0].value;
+        //alert(data)
+        $.post("/cabbooking/findCust", data, findCustomerCallBack, 'json');
+
+    <%#= document.forms[0].action = "/cabbooking/findCust"; %>
+    <%#= document.forms[0].submit(); %>
+    }
+
+
+    function findCustomerCallBack(data, status)
+    {
+        $('#cabObj_custName')[0].value = data.custName
+        $('#CabObj_custId')[0].value = data.custId
+
+        g_customer_id = data.id;
+
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+
+    function bookingFormDisplayToggle(){
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#bookingFormDiv')[0].style.display = 'block';
+        }
+
+    }
+
+    function lastBookingFormDisplayToggle()
+    {
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#lastBookingFormDiv')[0].style.display = 'block';
+        }
+    }
+
+    function delCust()
+    {
+        data = {};
+
+        data[$('#cabObj_custId')[0].name] = $('#cabObj_custId')[0].value;
+        //alert(data)
+        $.post("/cabbooking/delCust", data, findCustomerCallBack, 'json');
+
+        //document.forms[0].action = "/cabbooking/delCust";
+        //document.forms[0].submit();
+    }
+
+    function deleteCustomerCallBack(data, status)
+    {
+        $('#cabObj_custName')[0].value = 'nil'
+        $('#CabObj_custId')[0].value = 'nil'
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+    function findBook()
+    {
+       /* data = {};
+        data[$('#cabObj_bookingId')[0].name] = $('#cabObj_bookingId')[0].value;
+        //alert(data)
+        $.post("/cabbooking/findBook", data, findBookingCallBack, 'json');*/
+        document.forms[0].action = "/cabbooking/findBook";
+        document.forms[0].submit();
+
+    }
+
+    function findBookingCallBack(data, status)
+    {
+        $('#cabObj_custName')[0].value = data.custName
+        $('#CabObj_custId')[0].value = data.custId
+        $('#CabObj_bookingId')[0].value = data.bookingId
+        g_customer_id = data.id;
+
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+    function book()
+    {
+        /* data = {};
+
+         data[$('#cabObj_custID')[0].name] = $('#cabObj_custID')[0].value;
+         data[$('#cabObj_source')[0].name] = $('#cabObj_source')[0].value;
+         data[$('#cabObj_destination')[0].name] = $('#cabObj_destination')[0].value;
+         data[$('#cabObj_pickup')[0].name] = $('#cabObj_pickup')[0].value;
+
+         $.post("/cabbooking/book", data, BookingCallBack, 'json');    */
+        document.forms[0].action = "/cabbooking/book";
+        document.forms[0].submit();
+    }
+
+    /*function BookingCallBack(data, status)
+     {
+     $('#cabObj_custName')[0].value = data.custName
+     $('#CabObj_bookingId')[0].value = data.bookingId
+     g_customer_id = data.id;
+
+     bookingFormDisplayToggle();
+     lastBookingFormDisplayToggle();
+     } */
+
+    function updateBook()
+    {
+       /* data = {};
+        data[$('#cabObj_bookingId')[0].name] = $('#cabObj_bookingId')[0].value;
+        //alert(data)
+        $.post("/cabbooking/updateBook", data, updateBookingCallBack, 'json');*/
+        document.forms[0].action = "/cabbooking/updateBook";
+        document.forms[0].submit();
+    }
+
+    function updateBookingCallBack(data, status)
+    {
+        $('#cabObj_custName')[0].value = data.custName
+        $('#CabObj_custId')[0].value = data.custId
+        $('#cabObj_source')[0].value = data.source
+        $('#CabObj_destination')[0].value = data.destination
+        $('#cabObj_pickup')[0].value = data.pickup
+        g_customer_id = data.id;
+
+        bookingFormDisplayToggle();
+        lastBookingFormDisplayToggle();
+    }
+
+    function bookingFormDisplayToggle(){
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#bookingFormDiv')[0].style.display = 'compact';
+        }
+
+    }
+
+    function lastBookingFormDisplayToggle()
+    {
+        if(g_customer_id != '' && g_customer_id != 'nil'){
+            $('#lastBookingFormDiv')[0].style.display = 'block';
+        }
+    }
+
+</script>

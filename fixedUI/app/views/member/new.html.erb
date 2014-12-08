@@ -1,0 +1,46 @@
+<h1>Sign Up</h1>
+<%= form_for :travelagent, url: member_signupCreate_path do |f| %>
+    <% if !@agentObj.hash_errors.empty? %>
+        <div id="error_explanation" >
+          <h2><%= pluralize(@agentObj.hash_errors.size, "error") %>
+            prohibited this entry from being saved:</h2>
+          <ul>
+            <% @agentObj.hash_errors.each do |key, value| %>
+                <li><%= key %> : <%= value %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <p>
+      Travel Agent Name
+      <%= f.text_field :agentName %>
+    </p>
+    <p>
+      Travel Agent ID
+      <%= f.text_field :agentId %>
+    </p>
+    <p>
+      <%= f.label :mobile %>
+      <%= f.text_field :mobile %>
+    </p>
+
+    <p>
+      <%= f.label "Email" %>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
+
+    <p>
+      <%= f.label "Confirm Password" %>
+      <%= f.password_field :password_confirmation %>
+    </p>
+
+    <p>
+      <%= f.submit :Confirm %>
+    </p>
+
+<% end %>

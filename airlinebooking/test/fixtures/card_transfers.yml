@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_number: MyString
+  cvv: MyString
+  expiry: 2014-11-19
+  name_on_card: MyString
+  PaymentOptionCheckbox: false
+
+two:
+  card_number: MyString
+  cvv: MyString
+  expiry: 2014-11-19
+  name_on_card: MyString
+  PaymentOptionCheckbox: false

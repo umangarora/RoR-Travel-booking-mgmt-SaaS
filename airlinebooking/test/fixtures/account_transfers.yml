@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  PaymentOptionCheckbox: false
+  AccountID: MyString
+  CustBankID: MyString
+
+two:
+  PaymentOptionCheckbox: false
+  AccountID: MyString
+  CustBankID: MyString

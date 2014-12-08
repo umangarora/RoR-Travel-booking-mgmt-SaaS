@@ -1,0 +1,2 @@
+module BookingsServersHelper
+end

@@ -1,0 +1,389 @@
+<% if is_logged_in? %>
+    Logged in as: <%= logged_in_user.agentName %>
+    <%= link_to '<button type="button">Logout</button>'.html_safe, {:controller => 'member', :action => 'logout'}, :method => :post %><br>
+    <div><h1>Settings</h1>
+
+      <table>
+        <colgroup>
+          <col span="2" style="background-color:red">
+          <col style="background-color:yellow">
+        </colgroup>
+
+
+        <tr>
+
+
+      <div align="left">
+      <p><b>Choose app:</b></p>
+      <input id="1" type="checkbox" onclick="CheckChange(1)" /> Cab Booking<br/>
+      <input id="2" type="checkbox" onclick="CheckChange(2)" /> Airline Booking<br/>
+      <input id="3" type="checkbox" onclick="CheckChange(3)" /> App 3<br/>
+        <br>
+      <button onclick="submit()">Save</button><br>
+      </div>
+
+        </tr>
+
+        <tr>
+      <div align="center">
+        <img id="cabform" src="/cabform.png"  width=303 align=center height=419 style="display:none"/>
+      </div>
+
+        </tr>
+    </table>
+
+      <div id="airlineformcustom" align="center" style="display: none">
+        ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+
+        <head>
+          <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+          <title>Airline Booking Complete</title>
+        </head>
+
+        <body>
+
+        <form method="post">
+          <fieldset style="width: 400px">
+            <legend>Customer Details</legend>
+            <table>
+              <tbody>
+              <tr>
+                <td style="text-align: right">Customer name: </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right">Customer Id: </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right"><input name="Submit1" type="button" value="create" /></td>
+                <td style="text-align: left"><input name="Submit1" type="button" value="find" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right"><input name="Submit1" type="button" value="delete" /></td>
+                <td style="text-align: left">&nbsp;</td>
+              </tr>
+              </tbody>
+            </table>
+          </fieldset>
+
+          <fieldset style="width: 400px">
+            <legend>Booking Details</legend>
+            <table>
+              <tbody>
+              <tr>
+                <td style="text-align: right">Booking id: </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right">Source </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right">Destination </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right">Fare </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right">Total fare </td>
+                <td style="text-align: left"><input name="Text1" type="text" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right"><input name="Submit1" type="button" value="create" /></td>
+                <td style="text-align: left"><input name="Submit1" type="button" value="find" /></td>
+              </tr>
+              <tr>
+                <td style="text-align: right"><input name="Submit1" type="button" value="delete" /></td>
+                <td style="text-align: left"><input name="Submit1" type="button" value="print" /></td>
+              </tr>
+              </tbody>
+            </table>
+          </fieldset>
+
+          <fieldset style="width: 400px">
+            <legend>Select Airlines you want work with</legend>
+            Available airlines<br />
+            <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+            <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+            <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+            <input name="Checkbox1" type="checkbox" />Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+            <input name="Checkbox1" type="checkbox" />  Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+          </fieldset>
+
+          <fieldset style="width: 400px">
+            <legend>Select the payment options you want to inclue</legend>
+            <fieldset>
+              <legend>Account Trnsfer</legend>
+              <input name="Checkbox1" type="checkbox" /> select if you want this payment option<br />
+              <fieldset>
+                <legend>Account Trnsfer</legend>
+                Account id    <input name="Text1" type="text" /><br />
+                Cust Bank id  <input name="Text1" type="text" /><br />
+
+              </fieldset>
+            </fieldset>
+            <fieldset>
+              <legend>Credit Card</legend>
+              <input name="Checkbox1" type="checkbox" /> select if you want this payment option<br />
+              <fieldset>
+                <legend>account trnsfer</legend>
+                card number  <input name="Text1" type="text" /><br />
+                expiry       <input name="Text1" type="text" /><br />
+                CVV          <input name="Text1" type="text" /><br />
+                name on card <input name="Text1" type="text" /><br />
+
+              </fieldset>
+            </fieldset>
+          </fieldset>
+        </form>
+
+        </body>
+
+        </html>
+
+      </div>
+
+
+<table>
+<tr>
+  <div align="left">
+    <p><b>Added Apps:</b></p>
+    <p id="add1" style="display: none"><input id="a1" type="checkbox" onclick="CheckAddChange(1)" /> Cab Booking</p>
+    <p id="add2" style="display: none"><input id="a2" type="checkbox" onclick="CheckAddChange(2)" /> Airline Booking</p>
+    <p id="add3" style="display: none"><input id="a3" type="checkbox" onclick="CheckAddChange(3)" /> App 3</p>
+  </div>
+</tr>
+
+        <tr>
+          <div align="center">
+            <img id="cabform1" src="/cabform.png"  width=303 align=center height=419 style="display:none"/>
+          </div>
+
+        </tr>
+
+      </table>
+
+    <div id="airlineformcustom2" align="center" style="display: none">
+      ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+
+      <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <title>Airline Booking Complete</title>
+      </head>
+
+      <body>
+
+      <form method="post">
+        <fieldset style="width: 400px">
+          <legend>Customer Details</legend>
+          <table>
+            <tbody>
+            <tr>
+              <td style="text-align: right">Customer name: </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Customer Id: </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><input name="Submit1" type="button" value="create" /></td>
+              <td style="text-align: left"><input name="Submit1" type="button" value="find" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><input name="Submit1" type="button" value="delete" /></td>
+              <td style="text-align: left">&nbsp;</td>
+            </tr>
+            </tbody>
+          </table>
+        </fieldset>
+
+        <fieldset style="width: 400px">
+          <legend>Booking Details</legend>
+          <table>
+            <tbody>
+            <tr>
+              <td style="text-align: right">Booking id: </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Source </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Destination </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Fare </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right">Total fare </td>
+              <td style="text-align: left"><input name="Text1" type="text" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><input name="Submit1" type="button" value="create" /></td>
+              <td style="text-align: left"><input name="Submit1" type="button" value="find" /></td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><input name="Submit1" type="button" value="delete" /></td>
+              <td style="text-align: left"><input name="Submit1" type="button" value="print" /></td>
+            </tr>
+            </tbody>
+          </table>
+        </fieldset>
+
+        <fieldset style="width: 400px">
+          <legend>Select Airlines you want work with</legend>
+          Available airlines<br />
+          <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+          <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+          <input name="Checkbox1" type="checkbox" /> Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+          <input name="Checkbox1" type="checkbox" />Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+          <input name="Checkbox1" type="checkbox" />  Airline 1  &nbsp; Discount <input name="Text1" type="text" /> <br /><br />
+        </fieldset>
+
+        <fieldset style="width: 400px">
+          <legend>Select the payment options you want to inclue</legend>
+          <fieldset>
+            <legend>Account Trnsfer</legend>
+            <input name="Checkbox1" type="checkbox" /> select if you want this payment option<br />
+            <fieldset>
+              <legend>Account Trnsfer</legend>
+              Account id    <input name="Text1" type="text" /><br />
+              Cust Bank id  <input name="Text1" type="text" /><br />
+
+            </fieldset>
+          </fieldset>
+          <fieldset>
+            <legend>Credit Card</legend>
+            <input name="Checkbox1" type="checkbox" /> select if you want this payment option<br />
+            <fieldset>
+              <legend>account trnsfer</legend>
+              card number  <input name="Text1" type="text" /><br />
+              expiry       <input name="Text1" type="text" /><br />
+              CVV          <input name="Text1" type="text" /><br />
+              name on card <input name="Text1" type="text" /><br />
+
+            </fieldset>
+          </fieldset>
+        </fieldset>
+      </form>
+
+      </body>
+
+      </html>
+
+    </div>
+
+    </div>
+
+<% else %>
+    <p>User not signed in.</p>
+    <%= link_to 'Login', :controller => 'member', :action => 'login' %>
+<% end %>
+
+</div>
+
+<script type="text/javascript">
+    var checked_app=[false,false,false];
+    window.onload = load();
+
+    function load(){
+        if(logged_in_user.cabset){
+            checked_app[0]=true;
+            document.getElementById("1").checked = true;
+            document.getElementById("add1").style.display = "block";
+        }
+        if(logged_in_user.railset){
+            checked_app[1]=true;
+            document.getElementById("2").checked = true;
+            document.getElementById("add2").style.display = "block";
+        }
+
+        if(logged_in_user.airset){
+            checked_app[2]=true;
+            document.getElementById("3").checked = true;
+            document.getElementById("add3").style.display = "block";
+        }
+
+    }
+
+
+    function CheckChange(choice)
+    {
+         if (document.getElementById(choice).checked){
+            checked_app[choice-1]=true;
+            if(choice==1){
+                document.getElementById("cabform").style.display = "block";
+            }
+            if(choice==2){
+                 document.getElementById("airlineformcustom").style.display = "block";
+             }
+            document.getElementById("add"+choice).style.display = "block";
+        }
+        else{
+            checked_app[choice-1]=false;
+            document.getElementById("cabform").style.display = "none";
+            document.getElementById("airlineformcustom").style.display = "none";
+            document.getElementById("add"+choice).style.display = "none";
+             document.getElementById("cabform1").style.display = "none";
+             document.getElementById("airlineformcustom2").style.display = "none";
+        }
+
+    }
+
+    function CheckAddChange(choice)
+    {
+        if (document.getElementById("a"+choice).checked){
+
+            if(choice==1){
+                document.getElementById("cabform1").style.display = "block";
+            }
+            if(choice==2){
+                document.getElementById("airlineformcustom2").style.display = "block";
+            }
+        }
+        else{
+            document.getElementById("cabform1").style.display = "none";
+            document.getElementById("airlineformcustom2").style.display = "none";
+        }
+
+    }
+
+    function submit(){
+
+        var form = $('<form></form>');
+
+        form.attr("method", "post");
+        form.attr("action", "/welcome/settingsUpdate");
+
+        var field = $('<input/>');
+        field.attr("type", "hidden");
+        field.attr("name", "checked_app0");
+        field.attr("value", checked_app[0]);
+        form.append(field);
+
+        var field = $('<input/>');
+        field.attr("type", "hidden");
+        field.attr("name", "checked_app1");
+        field.attr("value", checked_app[1]);
+        form.append(field);
+
+        var field = $('<input/>');
+        field.attr("type", "hidden");
+        field.attr("name", "checked_app2");
+        field.attr("value", checked_app[2]);
+        form.append(field);
+
+        $(document.body).append(form);
+        form.submit();
+
+    }
+</script>
